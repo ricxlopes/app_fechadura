@@ -2,7 +2,6 @@ import 'package:app_autenticador_fechadura/page/login.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'page/fingerprint_page.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();

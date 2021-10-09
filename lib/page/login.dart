@@ -46,7 +46,7 @@ class LoginScreen2 extends StatelessWidget {
                           foregroundColor: this.foregroundColor,
                           radius: 100.0,
                           child: new Text(
-                            "S",
+                            "SD",
                             style: TextStyle(
                               fontSize: 50.0,
                               fontWeight: FontWeight.w100,
@@ -58,11 +58,17 @@ class LoginScreen2 extends StatelessWidget {
                             color: this.foregroundColor!,
                             width: 1.0,
                           ),
-                          shape: BoxShape.circle,
+                          shape: BoxShape.rectangle,
                           //image: DecorationImage(image: this.logo)
                         ),
                       ),
-
+                      new Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: new Text(
+                          "Smart Door",
+                          style: TextStyle(color: this.foregroundColor),
+                        ),
+                      )
                     ],
                   ),
                 ),
@@ -84,7 +90,7 @@ class LoginScreen2 extends StatelessWidget {
                     new Padding(
                       padding: EdgeInsets.only(top: 10.0, bottom: 10.0, right: 00.0),
                       child: Icon(
-                        Icons.alternate_email,
+                        Icons.alternate_email_outlined,
                         color: this.foregroundColor,
                       ),
                     ),
@@ -93,7 +99,7 @@ class LoginScreen2 extends StatelessWidget {
                         textAlign: TextAlign.center,
                         decoration: InputDecoration(
                           border: InputBorder.none,
-                          hintText: 'seu@email.com',
+                          hintText: 'Username',
                           hintStyle: TextStyle(color: this.foregroundColor),
                         ),
                       ),
@@ -118,7 +124,7 @@ class LoginScreen2 extends StatelessWidget {
                     new Padding(
                       padding: EdgeInsets.only(top: 10.0, bottom: 10.0, right: 00.0),
                       child: Icon(
-                        Icons.lock_open,
+                        Icons.lock_outline,
                         color: this.foregroundColor,
                       ),
                     ),
