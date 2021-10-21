@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "252395061156",
+    "project_id": "smartdoor-d9a65",
+    "storage_bucket": "smartdoor-d9a65.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:252395061156:android:4fa8986444ab6011a04b31",
+        "android_client_info": {
+          "package_name": "com.example.fingerprint_auth_example"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "252395061156-bdgfq34hmr4m6770if3ap5audotp316l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBDJVmbSn4mN0S-nuDnohjuq4S8TDOzdLo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "252395061156-bdgfq34hmr4m6770if3ap5audotp316l.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
