@@ -1,5 +1,4 @@
 import 'package:app_autenticador_fechadura/page/login.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -7,7 +6,6 @@ import 'package:flutter/services.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
@@ -17,7 +15,8 @@ Future main() async {
 }
 
 class MyApp extends StatelessWidget {
-  static const String title = 'Local Auth';
+
+  static const String title = 'SmartDoor';
 
   @override
   Widget build(BuildContext context) => MaterialApp(

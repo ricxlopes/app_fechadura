@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:app_autenticador_fechadura/page/home_page.dart';
 import 'package:app_autenticador_fechadura/page/sign_up.dart';
+import 'package:app_autenticador_fechadura/services/login_service.dart';
 import 'package:flutter/material.dart';
 
 
@@ -9,11 +12,15 @@ class LoginScreen extends StatefulWidget{
 
 class _LoginScreen extends State<LoginScreen>{
 
+  TextEditingController _mailInputController = TextEditingController();
+  TextEditingController _passwordInputController = TextEditingController();
+
   final Color? backgroundColor1;
   final Color? backgroundColor2;
   final Color? highlightColor;
   final Color? foregroundColor;
   final AssetImage? logo;
+  final _formKey = GlobalKey<FormState>();
   bool isPasswordVisible = true;
 
   _LoginScreen({
@@ -81,79 +88,103 @@ class _LoginScreen extends State<LoginScreen>{
                   ),
                 ),
               ),
-              new Container(
-                width: MediaQuery.of(context).size.width,
-                margin: const EdgeInsets.only(left: 40.0, right: 40.0),
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  border: Border(
-                    bottom: BorderSide(color: this.foregroundColor!, width: 0.5, style: BorderStyle.solid),
-                  ),
-                ),
-                padding: const EdgeInsets.only(left: 0.0, right: 10.0),
-                child: new Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    new Padding(
-                      padding: EdgeInsets.only(top: 10.0, bottom: 10.0, right: 00.0),
-                      child: Icon(
-                        Icons.alternate_email_sharp,
-                        color: this.foregroundColor,
-                      ),
-                    ),
-                    new Expanded(
-                      child: TextField(
-                        style: TextStyle(color: this.foregroundColor),
-                        textAlign: TextAlign.center,
-                        decoration: InputDecoration(
-                          border: InputBorder.none,
-                          hintText: 'E-mail',
-                          hintStyle: TextStyle(color: this.foregroundColor),
+              Form(
+                key: _formKey,
+                child: Column(
+                  children: [
+                    new Container(
+                      width: MediaQuery.of(context).size.width,
+                      margin: const EdgeInsets.only(left: 40.0, right: 40.0),
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        border: Border(
+                          bottom: BorderSide(color: this.foregroundColor!, width: 0.5, style: BorderStyle.solid),
                         ),
                       ),
-                    ),
-                  ],
-                ),
-              ),
-              new Container(
-                width: MediaQuery.of(context).size.width,
-                margin: const EdgeInsets.only(left: 40.0, right: 40.0, top: 10.0),
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  border: Border(
-                    bottom: BorderSide(color: this.foregroundColor!, width: 0.5, style: BorderStyle.solid),
-                  ),
-                ),
-                padding: const EdgeInsets.only(left: 0.0, right: 10.0),
-                child: new Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    new Padding(
-                      padding: EdgeInsets.only(top: 10.0, bottom: 10.0, right: 00.0),
-                      child: Icon(
-                        Icons.vpn_key_sharp,
-                        color: this.foregroundColor,
-                      ),
-                    ),
-                    new Expanded(
-                      child: TextField(
-                        style: TextStyle(color: this.foregroundColor),
-                        textAlign: TextAlign.center,
-                        decoration: InputDecoration(
-                          border: InputBorder.none,
-                          hintText: '********',
-                          hintStyle: TextStyle(color: this.foregroundColor),
-                          suffixIcon: IconButton(
-                            icon: isPasswordVisible
-                                ? Icon(Icons.visibility_off_sharp, color: this.foregroundColor)
-                                : Icon(Icons.visibility_sharp, color: this.foregroundColor),
-                            onPressed: () =>
-                                setState(() => isPasswordVisible = !isPasswordVisible),
+                      padding: const EdgeInsets.only(left: 0.0, right: 10.0),
+                      child: new Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          new Padding(
+                            padding: EdgeInsets.only(top: 10.0, bottom: 10.0, right: 00.0),
+                            child: Icon(
+                              Icons.alternate_email_sharp,
+                              color: this.foregroundColor,
+                            ),
                           ),
+                          new Expanded(
+                            child: TextFormField(
+                              validator: (value) {
+                                if (value!.length < 5) {
+                                  return "Esse e-mail parece curto demais";
+                                } else if (!value.contains("@")) {
+                                  return "Esse e-mail está meio estranho, não?";
+                                }
+                                return null;
+                              },
+                              controller: _mailInputController,
+                              autofocus: true,
+                              style: TextStyle(color: this.foregroundColor),
+                              textAlign: TextAlign.center,
+                              decoration: InputDecoration(
+                                border: InputBorder.none,
+                                hintText: 'E-mail',
+                                hintStyle: TextStyle(color: this.foregroundColor),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    new Container(
+                      width: MediaQuery.of(context).size.width,
+                      margin: const EdgeInsets.only(left: 40.0, right: 40.0, top: 10.0),
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        border: Border(
+                          bottom: BorderSide(color: this.foregroundColor!, width: 0.5, style: BorderStyle.solid),
                         ),
-                        obscureText: isPasswordVisible,
+                      ),
+                      padding: const EdgeInsets.only(left: 0.0, right: 10.0),
+                      child: new Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          new Padding(
+                            padding: EdgeInsets.only(top: 10.0, bottom: 10.0, right: 00.0),
+                            child: Icon(
+                              Icons.vpn_key_sharp,
+                              color: this.foregroundColor,
+                            ),
+                          ),
+                          new Expanded(
+                            child: TextFormField(
+                              validator: (value) {
+                                if (value!.length < 6) {
+                                  return "A senha deve ter pelo menos 6 caracteres";
+                                }
+                                return null;
+                              },
+                              controller: _passwordInputController,
+                              style: TextStyle(color: this.foregroundColor),
+                              textAlign: TextAlign.center,
+                              decoration: InputDecoration(
+                                border: InputBorder.none,
+                                hintText: '********',
+                                hintStyle: TextStyle(color: this.foregroundColor),
+                                suffixIcon: IconButton(
+                                  icon: isPasswordVisible
+                                      ? Icon(Icons.visibility_off_sharp, color: this.foregroundColor)
+                                      : Icon(Icons.visibility_sharp, color: this.foregroundColor),
+                                  onPressed: () =>
+                                      setState(() => isPasswordVisible = !isPasswordVisible),
+                                ),
+                              ),
+                              obscureText: isPasswordVisible,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ],
@@ -171,7 +202,7 @@ class _LoginScreen extends State<LoginScreen>{
                           padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 20.0),
                           primary: this.highlightColor,
                         ),
-                        onPressed: () => this.validateLogin(context),
+                        onPressed: () => _doLogin(),
                         child: Text(
                           "Entrar",
                           style: TextStyle(color: this.foregroundColor),
@@ -240,14 +271,33 @@ class _LoginScreen extends State<LoginScreen>{
     );
   }
 
-  void validateLogin(BuildContext context) {
-    // if () {
-    //
-    // }
-    debugPrint('context: $context');
+  void _doLogin() async {
+    if (_formKey.currentState!.validate()) {
+      var resp = await LoginService().login(
+          _mailInputController.text,
+          _passwordInputController.text
+      );
+      var jsonData = resp;
+      var status = json.decode(jsonData);
 
-    Navigator.of(context).pushReplacement(
-      MaterialPageRoute(builder: (context) => HomePage()),
-    );
+      try {
+        if (status['error']['message'] == 'INVALID_EMAIL') {
+          print('Não registrado');
+        } else if (status['error']['message'] == 'EMAIL_NOT_FOUND') {
+          print('E-mail incorreto');
+        } else if (status['error']['message'] == 'INVALID_PASSWORD') {
+          print('Senha incorreta');
+        }
+      } catch (error) {
+        print(error);
+        print('Logado');
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => HomePage()),
+        );
+      }
+    } else {
+      print("invalido");
+    }
   }
 }
