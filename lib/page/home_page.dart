@@ -1,5 +1,6 @@
 import 'package:app_autenticador_fechadura/api/local_auth_api.dart';
 import 'package:app_autenticador_fechadura/main.dart';
+import 'package:app_autenticador_fechadura/mqtt/mqtt.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatelessWidget {
@@ -38,6 +39,8 @@ class HomePage extends StatelessWidget {
           final isAuthenticated = await LocalAuthApi.authenticate();
 
           if (isAuthenticated) {
+            MQTTClientWrapper newclient = new MQTTClientWrapper();
+            newclient.prepareMqttClient();
             showDialog(
             context:  context,
               builder:  (BuildContext context) {

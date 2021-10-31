@@ -277,6 +277,7 @@ class _LoginScreen extends State<LoginScreen>{
           _mailInputController.text,
           _passwordInputController.text
       );
+
       var jsonData = resp;
       var status = json.decode(jsonData);
 
