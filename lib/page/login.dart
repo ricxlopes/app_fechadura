@@ -1,16 +1,22 @@
 import 'dart:convert';
 
+import 'package:app_autenticador_fechadura/mqtt/mqtt.dart';
 import 'package:app_autenticador_fechadura/page/home_page.dart';
 import 'package:app_autenticador_fechadura/page/sign_up.dart';
 import 'package:app_autenticador_fechadura/services/login_service.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/painting.dart';
 
 
 class LoginScreen extends StatefulWidget{
   _LoginScreen createState() => _LoginScreen();
 }
 
+
 class _LoginScreen extends State<LoginScreen>{
+
+  MQTTClientWrapper newclient = new MQTTClientWrapper();
 
   TextEditingController _mailInputController = TextEditingController();
   TextEditingController _passwordInputController = TextEditingController();
@@ -107,7 +113,7 @@ class _LoginScreen extends State<LoginScreen>{
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
                           new Padding(
-                            padding: EdgeInsets.only(top: 10.0, bottom: 10.0, right: 00.0),
+                            padding: EdgeInsets.only(top: 10.0, bottom: 10.0, right: 30.0),
                             child: Icon(
                               Icons.alternate_email_sharp,
                               color: this.foregroundColor,
@@ -134,6 +140,9 @@ class _LoginScreen extends State<LoginScreen>{
                               ),
                             ),
                           ),
+                          new Padding(
+                            padding: EdgeInsets.only(right: 40.0),
+                          ),
                         ],
                       ),
                     ),
@@ -146,13 +155,13 @@ class _LoginScreen extends State<LoginScreen>{
                           bottom: BorderSide(color: this.foregroundColor!, width: 0.5, style: BorderStyle.solid),
                         ),
                       ),
-                      padding: const EdgeInsets.only(left: 0.0, right: 10.0),
+                      padding: const EdgeInsets.only(left: 0.0, right: 00.0),
                       child: new Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
                           new Padding(
-                            padding: EdgeInsets.only(top: 10.0, bottom: 10.0, right: 00.0),
+                            padding: EdgeInsets.only(top: 10.0, bottom: 10.0, right: 30.0),
                             child: Icon(
                               Icons.vpn_key_sharp,
                               color: this.foregroundColor,
@@ -214,8 +223,8 @@ class _LoginScreen extends State<LoginScreen>{
               ),
               new Container(
                 width: MediaQuery.of(context).size.width,
-                margin: const EdgeInsets.only(left: 40.0, right: 40.0, top: 20.0),
-                alignment: Alignment.center,
+                margin: EdgeInsets.only(left: 40.0, right: 40.0, top: 120.0),
+                alignment: Alignment.bottomCenter,
                 child: new Row(
                   children: <Widget>[
                     new Expanded(
@@ -292,9 +301,10 @@ class _LoginScreen extends State<LoginScreen>{
       } catch (error) {
         print(error);
         print('Logado');
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => HomePage()),
+        // newclient.conexao();
+        Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(builder: (context) => HomePage()),
+                (Route<dynamic> route) => false
         );
       }
     } else {

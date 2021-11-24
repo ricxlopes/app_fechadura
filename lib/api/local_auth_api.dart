@@ -26,7 +26,7 @@ class LocalAuthApi {
 
     try {
       return await _auth.authenticate(
-        localizedReason: 'Scan Fingerprint to Authenticate',
+        localizedReason: 'Abra sua porta',
         useErrorDialogs: true,
         stickyAuth: true,
         biometricOnly: true,

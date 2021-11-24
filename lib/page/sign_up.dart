@@ -120,7 +120,7 @@ class _SingUpScreen extends State<SingUpScreen>{
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
                           new Padding(
-                            padding: EdgeInsets.only(top: 10.0, bottom: 10.0, right: 00.0),
+                            padding: EdgeInsets.only(top: 10.0, bottom: 10.0, right: 30.0),
                             child: Icon(
                               Icons.assignment_ind_sharp,
                               color: this.foregroundColor,
@@ -145,6 +145,9 @@ class _SingUpScreen extends State<SingUpScreen>{
                               ),
                             ),
                           ),
+                          new Padding(
+                            padding: EdgeInsets.only(right: 40.0),
+                          ),
                         ],
                       ),
                     ),
@@ -163,7 +166,7 @@ class _SingUpScreen extends State<SingUpScreen>{
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
                           new Padding(
-                            padding: EdgeInsets.only(top: 10.0, bottom: 10.0, right: 00.0),
+                            padding: EdgeInsets.only(top: 10.0, bottom: 10.0, right: 30.0),
                             child: Icon(
                               Icons.alternate_email_sharp,
                               color: this.foregroundColor,
@@ -190,6 +193,9 @@ class _SingUpScreen extends State<SingUpScreen>{
                               ),
                             ),
                           ),
+                          new Padding(
+                            padding: EdgeInsets.only(right: 40.0),
+                          ),
                         ],
                       ),
                     ),
@@ -202,13 +208,13 @@ class _SingUpScreen extends State<SingUpScreen>{
                           bottom: BorderSide(color: this.foregroundColor!, width: 0.5, style: BorderStyle.solid),
                         ),
                       ),
-                      padding: const EdgeInsets.only(left: 0.0, right: 10.0),
+                      padding: const EdgeInsets.only(left: 00.0, right: 00.0),
                       child: new Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
                           new Padding(
-                            padding: EdgeInsets.only(top: 10.0, bottom: 10.0, right: 00.0),
+                            padding: EdgeInsets.only(top: 10.0, bottom: 10.0, right: 30.0),
                             child: Icon(
                               Icons.vpn_key_sharp,
                               color: this.foregroundColor,

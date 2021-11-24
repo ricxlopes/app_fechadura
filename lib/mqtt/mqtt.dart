@@ -4,7 +4,7 @@ import 'package:mqtt_client/mqtt_client.dart';
 import 'package:mqtt_client/mqtt_server_client.dart';
 
 
-// main() {
+// mqttRun() {
 //   MQTTClientWrapper newclient = new MQTTClientWrapper();
 //   newclient.prepareMqttClient();
 // }
@@ -32,8 +32,14 @@ class MQTTClientWrapper {
     await _connectClient();
     _subscribeToTopic('testtopic/1');
     _publishMessage('1');
-    await Future.delayed(const Duration(milliseconds: 3000));
+    await MqttUtilities.asyncSleep(3);
+    // await Future.delayed(const Duration(milliseconds: 3000));
     _publishMessage('0');
+  }
+
+  void conexao() async {
+    _setupMqttClient();
+    await _connectClient();
   }
 
   // waiting for the connection, if an error occurs, print it and disconnect
