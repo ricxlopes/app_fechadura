@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:alan_voice/alan_voice.dart';
 import 'package:app_autenticador_fechadura/api/local_auth_api.dart';
 import 'package:app_autenticador_fechadura/main.dart';
 import 'package:app_autenticador_fechadura/mqtt/mqtt.dart';
@@ -17,41 +20,37 @@ class HomePage extends StatefulWidget {
 
 class _HomePage extends State<HomePage> {
 
+  // bool _voice = true;
+
   MQTTClientWrapper newclient = new MQTTClientWrapper();
 
-  late MqttServerClient client;
+  _HomePage() {
+    AlanVoice.addButton("c343f8e8838a276f5f7caa19f62a69e72e956eca572e1d8b807a3e2338fdd0dc/stage",
+        buttonAlign: AlanVoice.BUTTON_ALIGN_LEFT);
 
-  // bool _status = true;
+    AlanVoice.onCommand.add((command) => _handleCommand(command.data));
 
+    // AlanVoice.onCommand.add((command) {
+    //   debugPrint("got new command ${command.toString()}");
+    // });
+  }
+
+  void _handleCommand(Map<String, dynamic> command) {
+    switch(command['command']) {
+      case 'mqttRun':
+        mqttRun(newclient);
+        break;
+      default:
+        debugPrint('Unknown command');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // backgroundColor: _modo ? Colors.white : Colors.black,
       appBar: AppBar(
         title: Text(MyApp.title),
-        // backgroundColor:_modo ? Colors.indigoAccent : Colors.white30,
         actions: <Widget>[
-          // IconButton(
-          //   icon: Icon(
-          //     _status ? Icons.airplanemode_active : Icons.airplanemode_inactive,
-          //     color: Theme.of(context).iconTheme.color,
-          //   ),
-          //   onPressed: () {
-          //     newclient.conexao();
-          //     if (client.connectionStatus!.state == MqttConnectionState.connected) {
-          //       setState(() {
-          //         _status = !_status;
-          //       });
-          //     }
-          //     // if (client.connectionStatus!.state == MqttConnectionState.connected) {
-          //     //   print('client connected');
-          //     // } else {
-          //     //   print('client disconnecting');
-          //     // }
-          //   },
-          // ),
-          // Icon(Icons.ac_unit),
           IconButton(
             icon: Icon(
               Icons.settings,
@@ -77,16 +76,20 @@ class _HomePage extends State<HomePage> {
               leading: CircleAvatar(backgroundImage: AssetImage('assets/door.png')),
               trailing: Icon(Icons.touch_app_outlined, color: Theme.of(context).iconTheme.color),
               onTap: () async {
+                mqttRun(newclient);
+              },
+            ),
+          ),
+          Card(
+            child: ListTile(
+              title: Text('Garage'),
+              subtitle: Text('Porta da garagem'),
+              leading: CircleAvatar(backgroundImage: AssetImage('assets/garagem.png')),
+              trailing: Icon(Icons.touch_app_outlined, color: Theme.of(context).iconTheme.color),
+              onTap: () async {
                 final isAuthenticated = await LocalAuthApi.authenticate();
                 if (isAuthenticated) {
-                  mqttRun();
-                  showDialog(
-                    context: context,
-                    builder: (BuildContext context) => AlertDialog(
-                      title: const Text('Aberta!', textAlign: TextAlign.center),
-                      content: Image.asset("assets/gif_door.gif"),
-                    ),
-                  );
+                  // mqttRun(newclient);
                 }
               },
             ),
@@ -97,8 +100,24 @@ class _HomePage extends State<HomePage> {
   }
 
 
-  void mqttRun() {
-    MQTTClientWrapper newclient = new MQTTClientWrapper();
-    newclient.prepareMqttClient();
+  void mqttRun(newclient) async {
+    final isAuthenticated = await LocalAuthApi.authenticate();
+    if (isAuthenticated) {
+      newclient.prepareMqttClient();
+      showDialog(
+        context: context,
+        builder: (BuildContext context) => AlertDialog(
+          title: const Text('Aberta!', textAlign: TextAlign.center),
+          content: Image.asset("assets/gif_door.gif"),
+        ),
+      );
+    }
   }
+
+
+  // void voice() {
+  //   setState(() {
+  //     _voice = !_voice;
+  //   });
+  // }
 }

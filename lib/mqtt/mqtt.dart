@@ -31,10 +31,10 @@ class MQTTClientWrapper {
     _setupMqttClient();
     await _connectClient();
     _subscribeToTopic('testtopic/1');
-    _publishMessage('1');
+    _publishMessage('1', 'testtopic/1');
     await MqttUtilities.asyncSleep(3);
     // await Future.delayed(const Duration(milliseconds: 3000));
-    _publishMessage('0');
+    _publishMessage('0', 'testtopic/1');
   }
 
   void conexao() async {
@@ -66,6 +66,7 @@ class MQTTClientWrapper {
     }
   }
 
+
   void _setupMqttClient() {
     client = MqttServerClient.withPort(
         '5d0e82e8ac0840dbaa807123e70e6190.s1.eu.hivemq.cloud',
@@ -95,13 +96,13 @@ class MQTTClientWrapper {
     });
   }
 
-  void _publishMessage(String message) {
+  void _publishMessage(String message, String topicName) {
     final builder = MqttClientPayloadBuilder();
     builder.addString(message);
 
     print(
         'Publishing message "$message" to topic ${'Dart/Mqtt_client/testtopic'}');
-    client.publishMessage('testtopic/1', MqttQos.exactlyOnce, builder.payload!);
+    client.publishMessage(topicName, MqttQos.exactlyOnce, builder.payload!);
   }
 
   // callbacks for different events

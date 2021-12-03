@@ -36,8 +36,5 @@ class MyThemes {
     primaryColor: Colors.white,
     colorScheme: ColorScheme.light(),
     iconTheme: IconThemeData(color: Colors.black87, opacity: 0.8),
-    // textButtonTheme: TextButtonThemeData(
-    //   style: TextButton.styleFrom(primary: Colors.black),
-    // ),
   );
 }

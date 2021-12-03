@@ -243,9 +243,7 @@ class _LoginScreen extends State<LoginScreen>{
                   ],
                 ),
               ),
-              new Expanded(
-                child: Divider(),
-              ),
+              Divider(),
               new Container(
                 width: MediaQuery.of(context).size.width,
                 margin: const EdgeInsets.only(left: 40.0, right: 40.0, bottom: 20.0),
@@ -299,9 +297,7 @@ class _LoginScreen extends State<LoginScreen>{
           print('Senha incorreta');
         }
       } catch (error) {
-        print(error);
         print('Logado');
-        // newclient.conexao();
         Navigator.of(context).pushAndRemoveUntil(
             MaterialPageRoute(builder: (context) => HomePage()),
                 (Route<dynamic> route) => false
